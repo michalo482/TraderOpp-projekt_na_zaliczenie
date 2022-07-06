@@ -10,7 +10,7 @@ namespace TraderOop.EntityFramework
 {
     public class TraderDbContextFactory : IDesignTimeDbContextFactory<TraderDbContext>
     {
-        public TraderDbContext CreateDbContext(string[] args)
+        public TraderDbContext CreateDbContext(string[] args = null)
         {
             var options = new DbContextOptionsBuilder<TraderDbContext>();
 
