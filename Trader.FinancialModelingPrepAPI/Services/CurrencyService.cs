@@ -13,7 +13,7 @@ namespace Trader.FinancialModelingPrepAPI.Services
     {
         public async Task<CurrencyModel> GetCurrency(CurrencyCode currencyCode)
         {
-            string uri = $"https://api.nbp.pl/api/exchangerates/rates/A/{currencyCode}/today/?format=json";
+            string uri = $"https://api.nbp.pl/api/exchangerates/rates/A/{GetUriSuffix(currencyCode)}/today/?format=json";
 
             using (HttpClient client = new HttpClient())
             {
@@ -23,6 +23,21 @@ namespace Trader.FinancialModelingPrepAPI.Services
                 CurrencyModel currency = JsonConvert.DeserializeObject<CurrencyModel>(jsonResponse);    
                 
                 return currency;
+            }
+        }
+
+        private string GetUriSuffix(CurrencyCode currencyCode)
+        {
+            switch(currencyCode)
+            {
+                case CurrencyCode.USD:
+                    return "USD";
+                case CurrencyCode.CHF:
+                    return "CHF";
+                case CurrencyCode.GBP:
+                    return "GBP";
+                default:
+                    return "USD";
             }
         }
     }
