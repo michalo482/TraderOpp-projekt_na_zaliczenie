@@ -6,11 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Trader.WPF.Commands;
+using Trader.WPF.Models;
 using Trader.WPF.ViewModels;
 
 namespace Trader.WPF.State.Navigators
 {
-    public class Navigator : INavigator, INotifyPropertyChanged
+    public class Navigator : ObservableObject, INavigator
     {
         private ViewModelBase _currentViewModel;
         public ViewModelBase CurrentViewModel
@@ -26,12 +27,6 @@ namespace Trader.WPF.State.Navigators
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
 
         public ICommand UpdateCurrentViewModelCommand => new UpdateCurrentViewModelCommand(this);    

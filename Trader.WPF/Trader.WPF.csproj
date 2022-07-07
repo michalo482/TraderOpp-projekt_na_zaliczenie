@@ -12,8 +12,4 @@
     <ProjectReference Include="..\TraderOop.EntityFramework\TraderOop.EntityFramework.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\" />
-  </ItemGroup>
-
 </Project>
