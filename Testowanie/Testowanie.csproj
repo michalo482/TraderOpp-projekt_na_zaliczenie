@@ -1,14 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Trader.FinancialModelingPrepAPI\Trader.FinancialModelingPrepAPI.csproj" />
+    <ProjectReference Include="..\Trader.WPF\Trader.WPF.csproj" />
     <ProjectReference Include="..\TraderOop.Domain\TraderOop.Domain.csproj" />
     <ProjectReference Include="..\TraderOop.EntityFramework\TraderOop.EntityFramework.csproj" />
   </ItemGroup>

@@ -5,7 +5,9 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Trader.FinancialModelingPrepAPI.Services;
 using Trader.WPF.ViewModels;
+using TraderOop.Domain;
 
 namespace Trader.WPF
 {
@@ -16,6 +18,7 @@ namespace Trader.WPF
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+
             Window mainWindow = new MainWindow();
             mainWindow.DataContext = new MainViewModel();
             mainWindow.Show();

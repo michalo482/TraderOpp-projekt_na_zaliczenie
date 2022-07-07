@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Trader.FinancialModelingPrepAPI.Services;
 using Trader.WPF.State.Navigators;
 using Trader.WPF.ViewModels;
 
@@ -33,7 +34,7 @@ namespace Trader.WPF.Commands
                 switch (viewType)
                 {
                     case ViewType.Home:
-                        _navigator.CurrentViewModel = new HomeViewModel();
+                        _navigator.CurrentViewModel = new HomeViewModel(CurrencyViewModel.LoadCurrencyViewModel(new CurrencyService()));
                         break;
                     case ViewType.Portfolio:
                         _navigator.CurrentViewModel = new PortfolioViewModel();
