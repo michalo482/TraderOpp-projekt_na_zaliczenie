@@ -13,16 +13,12 @@ namespace Trader.FinancialModelingPrepAPI.Services
     {
         public async Task<CurrencyModel> GetCurrency(CurrencyCode currencyCode)
         {
-            string uri = $"https://api.nbp.pl/api/exchangerates/rates/A/{GetUriSuffix(currencyCode)}/?format=json";
+            string uri = $"{GetUriSuffix(currencyCode)}/?format=json";
 
-            using (HttpClient client = new HttpClient())
+            using (FinancialModelingPrepHttpClient client = new FinancialModelingPrepHttpClient())
             {
-                HttpResponseMessage response =  await client.GetAsync(uri);
-                string jsonResponse = await response.Content.ReadAsStringAsync();
-
-                CurrencyModel currency = JsonConvert.DeserializeObject<CurrencyModel>(jsonResponse);    
-                
-                return currency;
+                CurrencyModel currencyModel = await client.GetAsync<CurrencyModel>(uri);
+                return currencyModel;
             }
         }
 
@@ -37,7 +33,7 @@ namespace Trader.FinancialModelingPrepAPI.Services
                 case CurrencyCode.GBP:
                     return "GBP";
                 default:
-                    return "USD";
+                    throw new Exception("Currency code not supported");
             }
         }
     }

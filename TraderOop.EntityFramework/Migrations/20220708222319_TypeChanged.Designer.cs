@@ -12,8 +12,8 @@ using TraderOop.EntityFramework;
 namespace TraderOop.EntityFramework.Migrations
 {
     [DbContext(typeof(TraderDbContext))]
-    [Migration("20220706210556_Initial")]
-    partial class Initial
+    [Migration("20220708222319_TypeChanged")]
+    partial class TypeChanged
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,8 +35,8 @@ namespace TraderOop.EntityFramework.Migrations
                     b.Property<int>("AccountHolderId")
                         .HasColumnType("int");
 
-                    b.Property<double>("Balance")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -124,8 +124,8 @@ namespace TraderOop.EntityFramework.Migrations
                             b1.Property<int>("AssetTransactionId")
                                 .HasColumnType("int");
 
-                            b1.Property<double>("Price")
-                                .HasColumnType("float");
+                            b1.Property<decimal>("Price")
+                                .HasColumnType("decimal(18,2)");
 
                             b1.Property<string>("Symbol")
                                 .IsRequired()
