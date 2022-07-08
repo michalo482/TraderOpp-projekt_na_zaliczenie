@@ -18,7 +18,23 @@ namespace TraderOop.Domain.Models
     {
         public string Table { get; set; }
         public string Currency { get; set; }        
-        public CurrencyCode Code { get; set; }
+        public CurrencyCode Code { get; set; }  
         public List<Rate> Rates { get; set; }
+        
+        public decimal Mid 
+        { 
+            get
+            {
+                return Rates.First().Mid;
+            }
+        }
+        
+        public string EffectiveDate
+        {
+            get
+            {
+                return Rates.First().EffectiveDate;
+            }
+        }
     }
 }

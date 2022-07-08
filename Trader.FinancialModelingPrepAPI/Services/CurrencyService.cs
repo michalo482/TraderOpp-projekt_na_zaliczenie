@@ -13,7 +13,7 @@ namespace Trader.FinancialModelingPrepAPI.Services
     {
         public async Task<CurrencyModel> GetCurrency(CurrencyCode currencyCode)
         {
-            string uri = $"https://api.nbp.pl/api/exchangerates/rates/A/{GetUriSuffix(currencyCode)}/today/?format=json";
+            string uri = $"https://api.nbp.pl/api/exchangerates/rates/A/{GetUriSuffix(currencyCode)}/?format=json";
 
             using (HttpClient client = new HttpClient())
             {

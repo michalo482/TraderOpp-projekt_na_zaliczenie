@@ -8,24 +8,60 @@ using TraderOop.Domain.Services;
 
 namespace Trader.WPF.ViewModels
 {
-    public class CurrencyViewModel
+    public class CurrencyListingViewModel : ViewModelBase
     {
         private readonly ICurrencyService _currencyService;
 
-        
 
-        public CurrencyModel USD { get; set; }
-        public CurrencyModel CHF { get; set; }
-        public CurrencyModel GBP { get; set; }
+        private CurrencyModel _usd;        
+        public CurrencyModel USD 
+        {
+            get
+            {
+                return _usd;
+            }
+            set
+            {
+                _usd = value;
+                OnPropertyChanged(nameof(USD));
+            }
+        }
+        private CurrencyModel _chf;
+        public CurrencyModel CHF
+        {
+            get
+            {
+                return _chf;
+            }
+            set
+            {
+                _chf = value;
+                OnPropertyChanged(nameof(CHF));
+            }
+        }
+        private CurrencyModel _gbp;
+        public CurrencyModel GBP { 
+            get
+            {
+                return _gbp;
+            }
+            set
+            {
+                _gbp = value;
+                OnPropertyChanged(nameof(GBP));
+            } 
+        }
 
-        public CurrencyViewModel(ICurrencyService currencyService)
+        public CurrencyListingViewModel(ICurrencyService currencyService)
         {
             _currencyService = currencyService;
         }
 
-        public static CurrencyViewModel LoadCurrencyViewModel(ICurrencyService currencyService)
+        
+
+        public static CurrencyListingViewModel LoadCurrencyViewModel(ICurrencyService currencyService)
         {
-            CurrencyViewModel currencyViewModel = new CurrencyViewModel(currencyService);
+            CurrencyListingViewModel currencyViewModel = new CurrencyListingViewModel(currencyService);
             currencyViewModel.LoadCurrencies();
             return currencyViewModel;
         }

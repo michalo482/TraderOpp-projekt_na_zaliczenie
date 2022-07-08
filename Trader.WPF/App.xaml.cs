@@ -18,7 +18,7 @@ namespace Trader.WPF
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-
+            
             Window mainWindow = new MainWindow();
             mainWindow.DataContext = new MainViewModel();
             mainWindow.Show();
