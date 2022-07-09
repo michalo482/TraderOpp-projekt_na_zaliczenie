@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Trader.WPF.Commands;
 using Trader.WPF.Models;
 using Trader.WPF.ViewModels;
+using Trader.WPF.ViewModels.Factories;
 
 namespace Trader.WPF.State.Navigators
 {
@@ -29,6 +30,10 @@ namespace Trader.WPF.State.Navigators
 
 
 
-        public ICommand UpdateCurrentViewModelCommand => new UpdateCurrentViewModelCommand(this);    
+        public ICommand UpdateCurrentViewModelCommand { get; set; }
+        public Navigator(ITraderViewModelAbstractFactory traderViewModelAbstractFactory)
+        {
+            UpdateCurrentViewModelCommand = new UpdateCurrentViewModelCommand(this, traderViewModelAbstractFactory);
+        }
     }
 }

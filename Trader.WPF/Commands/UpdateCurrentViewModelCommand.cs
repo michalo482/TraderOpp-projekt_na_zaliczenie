@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Trader.FinancialModelingPrepAPI.Services;
 using Trader.WPF.State.Navigators;
 using Trader.WPF.ViewModels;
+using Trader.WPF.ViewModels.Factories;
 
 namespace Trader.WPF.Commands
 {
@@ -14,11 +15,13 @@ namespace Trader.WPF.Commands
     {
         public event EventHandler? CanExecuteChanged;
 
-        private INavigator _navigator;
+        private readonly INavigator _navigator;
+        private readonly ITraderViewModelAbstractFactory _viewModelFactory;
 
-        public UpdateCurrentViewModelCommand(INavigator navigator)
+        public UpdateCurrentViewModelCommand(INavigator navigator, ITraderViewModelAbstractFactory viewModelFactory)
         {
             _navigator = navigator;
+            _viewModelFactory = viewModelFactory;
         }
 
         public bool CanExecute(object? parameter)
@@ -31,18 +34,8 @@ namespace Trader.WPF.Commands
             if (parameter is ViewType)
             {
                 ViewType viewType = (ViewType)parameter;
-                switch (viewType)
-                {
-                    case ViewType.Home:
-                        _navigator.CurrentViewModel = new HomeViewModel(CurrencyListingViewModel.LoadCurrencyViewModel(new CurrencyService()));
-                        break;
-                    case ViewType.Portfolio:
-                        _navigator.CurrentViewModel = new PortfolioViewModel();
-                        break;
-                    default:
-                        break;
-                }
 
+                _navigator.CurrentViewModel = _viewModelFactory.CreateViewModel(viewType);
             }
         }
     }
