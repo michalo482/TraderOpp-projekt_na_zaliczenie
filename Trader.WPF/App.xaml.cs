@@ -27,9 +27,7 @@ namespace Trader.WPF
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            IServiceProvider serviceProvider = CreateServiceProvider();
-            IAuthenticationService authentication = serviceProvider.GetRequiredService<IAuthenticationService>();
-            authentication.Login("test3", "test123");
+            IServiceProvider serviceProvider = CreateServiceProvider();           
 
             Window mainWindow = serviceProvider.GetRequiredService<MainWindow>(); 
             mainWindow.Show();

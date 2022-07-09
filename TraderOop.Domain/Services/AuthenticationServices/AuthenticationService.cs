@@ -24,6 +24,12 @@ namespace TraderOop.Domain.Services.AuthenticationServices
         public async Task<Account> Login(string username, string password)
         {
             Account storedAccount = await _accountService.GetByUsername(username);
+
+            if (storedAccount == null)
+            {
+                throw new UserNotFoundException(username);
+            }
+
             PasswordVerificationResult passwordResult = _passwordHasher.VerifyHashedPassword(storedAccount.AccountHolder.Password, password);
             if (passwordResult != PasswordVerificationResult.Success)
             {
