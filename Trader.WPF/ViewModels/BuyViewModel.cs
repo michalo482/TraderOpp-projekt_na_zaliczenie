@@ -16,14 +16,37 @@ namespace Trader.WPF.ViewModels
         public string Symbol
         {
             get { return _symbol; }
-            set { _symbol = value; OnPropertyChanged(nameof(Symbol)); }
+            set { 
+                _symbol = value; 
+                OnPropertyChanged(nameof(Symbol));
+                
+            }
+        }
+
+        private string _searchResultSymbol = string.Empty;
+        public string SearchResultSymbol
+        {
+            get
+            {
+                return _searchResultSymbol;
+            }
+            set
+            {
+                _searchResultSymbol = value;
+                OnPropertyChanged(nameof(SearchResultSymbol));
+                
+            }
         }
 
         private decimal _currencyPrice;
         public decimal CurrencyPrice
         {
             get { return _currencyPrice; }
-            set { _currencyPrice = value; OnPropertyChanged(nameof(CurrencyPrice)); }
+            set { 
+                _currencyPrice = value; 
+                OnPropertyChanged(nameof(CurrencyPrice));
+                OnPropertyChanged(nameof(TotalPrice));
+            }
         }
 
         private int _sharesToBuy;

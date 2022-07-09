@@ -15,8 +15,8 @@
         </Grid.RowDefinitions>
         
         <controls:NavigationBar DataContext="{Binding Navigator}" Grid.Row="0"/>
-        <ContentControl Content="{Binding Navigator.CurrentViewModel}" Grid.Row="1"/>
-
-
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <ContentControl Content="{Binding Navigator.CurrentViewModel}"/>
+        </ScrollViewer>
     </Grid>
 </Window>

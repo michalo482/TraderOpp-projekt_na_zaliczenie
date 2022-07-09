@@ -32,6 +32,7 @@ namespace Trader.WPF.Commands
             try
             {
                 decimal currencyPrice = await _currencyPriceService.GetPrice(_buyViewModel.Symbol);
+                _buyViewModel.SearchResultSymbol = _buyViewModel.Symbol.ToUpper();
                 _buyViewModel.CurrencyPrice = currencyPrice;
             }
             catch (Exception e)
