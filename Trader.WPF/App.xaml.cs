@@ -42,7 +42,7 @@ namespace Trader.WPF
             services.AddSingleton<IBuyService, BuyService>();
             services.AddSingleton<ICurrencyService, CurrencyService>();
 
-            services.AddSingleton<ITraderViewModelAbstractFactory, TradeViewModelAbstractFactory>();
+            services.AddSingleton<ITraderViewModelAbstractFactory, TradeViewModelAbstractFactory>();           
             services.AddSingleton<ITraderViewModelFactory<HomeViewModel>, HomeViewModelFactory>();
             services.AddSingleton<ITraderViewModelFactory<PortfolioViewModel>, PortfolioViewModelFactory>();
             services.AddSingleton<ITraderViewModelFactory<CurrencyListingViewModel>, CurrencyListingViewModelFactory>();
@@ -50,6 +50,7 @@ namespace Trader.WPF
             
             services.AddScoped<INavigator, Navigator>();
             services.AddScoped<MainViewModel>();
+            services.AddScoped<BuyViewModel>();
 
             services.AddScoped<MainWindow>(s => new MainWindow(s.GetRequiredService<MainViewModel>()));
 

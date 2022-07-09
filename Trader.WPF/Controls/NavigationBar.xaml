@@ -31,7 +31,7 @@
             </Grid.ColumnDefinitions>
             <RadioButton Grid.Column="0" Content="Główna" IsChecked="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueParameterConverter}, ConverterParameter={x:Type vm:HomeViewModel}}" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.Home}"/>
             <RadioButton Grid.Column="1" Content="Portfolio" IsChecked="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueParameterConverter}, ConverterParameter={x:Type vm:PortfolioViewModel}}" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.Portfolio}"/>
-            <RadioButton Grid.Column="2" Content="Kup"/>
+            <RadioButton Grid.Column="2" Content="Kup" IsChecked="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueParameterConverter}, ConverterParameter={x:Type vm:BuyViewModel}}" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.Buy}"/>
             <RadioButton Grid.Column="3" Content="Sprzedaj"/>
         </Grid>
     </Grid>

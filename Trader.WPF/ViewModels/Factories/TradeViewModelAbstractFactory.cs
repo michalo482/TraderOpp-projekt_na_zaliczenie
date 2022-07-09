@@ -13,11 +13,12 @@ namespace Trader.WPF.ViewModels.Factories
 
         private readonly ITraderViewModelFactory<HomeViewModel> _homeViewModelFactory;
         private readonly ITraderViewModelFactory<PortfolioViewModel> _portfolioViewModelFactory;
-
-        public TradeViewModelAbstractFactory(ITraderViewModelFactory<HomeViewModel> homeViewModelFactory, ITraderViewModelFactory<PortfolioViewModel> portfolioViewModelFactory)
+        private readonly BuyViewModel _buyViewModel;
+        public TradeViewModelAbstractFactory(ITraderViewModelFactory<HomeViewModel> homeViewModelFactory, ITraderViewModelFactory<PortfolioViewModel> portfolioViewModelFactory, BuyViewModel buyViewModel)
         {
             _homeViewModelFactory = homeViewModelFactory;
             _portfolioViewModelFactory = portfolioViewModelFactory;
+            _buyViewModel = buyViewModel;
         }
 
         public ViewModelBase CreateViewModel(ViewType viewType)
@@ -28,6 +29,8 @@ namespace Trader.WPF.ViewModels.Factories
                     return _homeViewModelFactory.CreateViewModel();
                 case ViewType.Portfolio:
                     return _portfolioViewModelFactory.CreateViewModel();
+                case ViewType.Buy:
+                    return _buyViewModel;
                 default:
                     throw new ArgumentException("No ViewModel for that ViewType", "viewType");
             }
