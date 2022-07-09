@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -13,6 +14,7 @@ using Trader.WPF.ViewModels.Factories;
 using TraderOop.Domain;
 using TraderOop.Domain.Models;
 using TraderOop.Domain.Services;
+using TraderOop.Domain.Services.AuthenticationServices;
 using TraderOop.Domain.Services.TransactionServices;
 using TraderOop.EntityFramework.Services;
 
@@ -26,7 +28,9 @@ namespace Trader.WPF
         protected override void OnStartup(StartupEventArgs e)
         {
             IServiceProvider serviceProvider = CreateServiceProvider();
-            
+            IAuthenticationService authentication = serviceProvider.GetRequiredService<IAuthenticationService>();
+            authentication.Login("test3", "test123");
+
             Window mainWindow = serviceProvider.GetRequiredService<MainWindow>(); 
             mainWindow.Show();
             base.OnStartup(e);
@@ -37,16 +41,21 @@ namespace Trader.WPF
             IServiceCollection services = new ServiceCollection();
 
             services.AddSingleton<TraderOop.EntityFramework.TraderDbContextFactory>();
+            services.AddSingleton<IAuthenticationService, AuthenticationService>();
             services.AddSingleton<IDataService<Account>, AccountDataService>();
+            services.AddSingleton<IAccountService, AccountDataService>();
             services.AddSingleton<ICurrencyPriceService, CurrencyPriceService>();
             services.AddSingleton<IBuyService, BuyService>();
             services.AddSingleton<ICurrencyService, CurrencyService>();
+
+            services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
             services.AddSingleton<ITraderViewModelAbstractFactory, TradeViewModelAbstractFactory>();           
             services.AddSingleton<ITraderViewModelFactory<HomeViewModel>, HomeViewModelFactory>();
             services.AddSingleton<ITraderViewModelFactory<PortfolioViewModel>, PortfolioViewModelFactory>();
             services.AddSingleton<ITraderViewModelFactory<CurrencyListingViewModel>, CurrencyListingViewModelFactory>();
 
+            
             
             services.AddScoped<INavigator, Navigator>();
             services.AddScoped<MainViewModel>();
