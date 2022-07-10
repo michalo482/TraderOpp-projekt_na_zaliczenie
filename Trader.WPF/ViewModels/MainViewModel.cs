@@ -14,20 +14,36 @@ namespace Trader.WPF.ViewModels
     public class MainViewModel : ViewModelBase
     {
         private readonly ITraderViewModelAbstractFactory _traderViewModelFactory;
+        private readonly INavigator _navigator;
+        private readonly IAuthenticator _authenticator;
 
-        public INavigator Navigator { get; set; }
-        public IAuthenticator Authenticator { get; }
+        public bool IsLoggedIn => _authenticator.IsLoggedIn;
+        public ViewModelBase CurrentViewModel => _navigator.CurrentViewModel;
+
         public ICommand UpdateCurrentViewModelCommand { get; }
 
         public MainViewModel(INavigator navigator, ITraderViewModelAbstractFactory traderViewModelFactory, IAuthenticator authenticator)
         {
-            Navigator = navigator;
+            _navigator = navigator;
             _traderViewModelFactory = traderViewModelFactory;
-            Authenticator = authenticator;
+            _authenticator = authenticator;
+
+            _navigator.StateChange += Navigator_StateChanged;
+            _authenticator.StateChange += Authenticator_StateChanged;
 
             UpdateCurrentViewModelCommand = new UpdateCurrentViewModelCommand(navigator, _traderViewModelFactory);
             
             UpdateCurrentViewModelCommand.Execute(ViewType.Login);
+        }
+
+        private void Authenticator_StateChanged()
+        {
+            OnPropertyChanged(nameof(IsLoggedIn));
+        }
+
+        private void Navigator_StateChanged()
+        {
+            OnPropertyChanged(nameof(CurrentViewModel));
         }
     }
 }

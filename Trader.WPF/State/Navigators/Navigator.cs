@@ -12,9 +12,10 @@ using Trader.WPF.ViewModels.Factories;
 
 namespace Trader.WPF.State.Navigators
 {
-    public class Navigator : ObservableObject, INavigator
+    public class Navigator : INavigator
     {
         private ViewModelBase _currentViewModel;
+        public event Action StateChange;
         public ViewModelBase CurrentViewModel
         {
             get
@@ -24,8 +25,9 @@ namespace Trader.WPF.State.Navigators
             set
             {
                 _currentViewModel = value;
-                OnPropertyChanged(nameof(CurrentViewModel));
+                StateChange?.Invoke();
             }
         }
+        
     }
 }

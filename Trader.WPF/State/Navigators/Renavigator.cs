@@ -11,17 +11,17 @@ namespace Trader.WPF.State.Navigators
     public class Renavigator<TViewModel> : IRenavigator where TViewModel : ViewModelBase
     {
         private readonly INavigator _navigator;
-        private readonly ITraderViewModelFactory<TViewModel> _viewModelFactory;
+        private readonly CreateViewModel<TViewModel> _createViewiewModel;
 
-        public Renavigator(INavigator navigator, ITraderViewModelFactory<TViewModel> viewModelFactory)
+        public Renavigator(INavigator navigator, CreateViewModel<TViewModel> createViewiewModel)
         {
             _navigator = navigator;
-            _viewModelFactory = viewModelFactory;
+            _createViewiewModel = createViewiewModel;
         }
 
         public void Renavigate()
         {
-            _navigator.CurrentViewModel = _viewModelFactory.CreateViewModel();
+            _navigator.CurrentViewModel = _createViewiewModel();
         }
     }
 }

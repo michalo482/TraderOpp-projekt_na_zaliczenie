@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Trader.WPF.Commands;
+using Trader.WPF.State.Accounts;
 using TraderOop.Domain.Services;
 using TraderOop.Domain.Services.TransactionServices;
 
@@ -71,10 +72,10 @@ namespace Trader.WPF.ViewModels
         public ICommand SearchSymbolCommand { get; set; }
         public ICommand BuyCurrencyCommand { get; set; }
 
-        public BuyViewModel(ICurrencyPriceService currencyPriceService, IBuyService buyService)
+        public BuyViewModel(ICurrencyPriceService currencyPriceService, IBuyService buyService, IAccountStore accountStore)
         {
             SearchSymbolCommand = new SearchSymbolCommand(this, currencyPriceService);
-            BuyCurrencyCommand = new BuyCurrencyCommand(this, buyService);
+            BuyCurrencyCommand = new BuyCurrencyCommand(this, buyService, accountStore);
         }
     }
 }

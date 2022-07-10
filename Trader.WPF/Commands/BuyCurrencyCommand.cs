@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Trader.WPF.State.Accounts;
 using Trader.WPF.ViewModels;
 using TraderOop.Domain.Models;
 using TraderOop.Domain.Services.TransactionServices;
@@ -15,13 +16,15 @@ namespace Trader.WPF.Commands
     {
         public event EventHandler? CanExecuteChanged;
 
-        private BuyViewModel _buyViewModel;
-        private IBuyService _buyService;
+        private readonly BuyViewModel _buyViewModel;
+        private readonly IBuyService _buyService;
+        private readonly IAccountStore _accountStore;
 
-        public BuyCurrencyCommand(BuyViewModel buyViewModel, IBuyService buyService)
+        public BuyCurrencyCommand(BuyViewModel buyViewModel, IBuyService buyService, IAccountStore accountStore)
         {
             _buyViewModel = buyViewModel;
             _buyService = buyService;
+            _accountStore = accountStore;
         }
 
         public bool CanExecute(object? parameter)
@@ -33,12 +36,9 @@ namespace Trader.WPF.Commands
         {
             try
             {
-                Account account = await _buyService.BuyCurrency(new Account()
-                {
-                    Id = 1,
-                    Balance = 500,
-                    AssetTransactions = new List<AssetTransaction>()
-                }, _buyViewModel.Symbol, _buyViewModel.SharesToBuy);
+                Account account = await _buyService.BuyCurrency(_accountStore.CurrentAccount, _buyViewModel.Symbol, _buyViewModel.SharesToBuy);
+
+                _accountStore.CurrentAccount = account;
             }
             catch (Exception e)
             {

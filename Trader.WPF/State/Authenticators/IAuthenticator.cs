@@ -13,6 +13,7 @@ namespace Trader.WPF.State.Authenticators
         Account CurrenctAccount { get; }
         bool IsLoggedIn { get; }
 
+        event Action StateChange;
         Task<RegistrationResult> Register(string email, string username, string password, string confirmPassword);
         Task<bool> Login(string username, string password);
         void Logout();

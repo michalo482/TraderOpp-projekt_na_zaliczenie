@@ -4,34 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Trader.WPF.Models;
+using Trader.WPF.State.Accounts;
 using TraderOop.Domain.Models;
 using TraderOop.Domain.Services.AuthenticationServices;
 
 namespace Trader.WPF.State.Authenticators
 {
-    public class Authenticator : ObservableObject, IAuthenticator
+    public class Authenticator : IAuthenticator
     {
 
         private readonly IAuthenticationService _authenticationService;
+        private readonly IAccountStore _accountStore;
 
-        public Authenticator(IAuthenticationService authenticationService)
+        public Authenticator(IAuthenticationService authenticationService, IAccountStore accountStore)
         {
             _authenticationService = authenticationService;
+            _accountStore = accountStore;
         }
-
-        private Account _currentAccount;
+        public event Action StateChange;
         public Account CurrenctAccount { 
             get
             {
-                return _currentAccount;
+                return _accountStore.CurrentAccount;
             }
             private set
             {
-                _currentAccount = value;
-                OnPropertyChanged(nameof(CurrenctAccount));
-                OnPropertyChanged(nameof(IsLoggedIn));
+                _accountStore.CurrentAccount = value;
+                StateChange?.Invoke();
+
             }
         }
+
 
         public bool IsLoggedIn => CurrenctAccount != null;
 

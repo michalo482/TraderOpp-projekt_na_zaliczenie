@@ -8,35 +8,47 @@ using Trader.WPF.State.Navigators;
 
 namespace Trader.WPF.ViewModels.Factories
 {
+    /// <summary>
+    /// pobiera serwisy i kiedy chcemy dany ViewModel wołamy CreateViewModel,
+    /// dostajemy dany ViewModel i nie musimy wiedzieć jak on działa
+    /// fabryki widoków są wstrzykiwane w App.xaml.cs przez Dependency Injection
+    /// </summary>
     public class TradeViewModelAbstractFactory : ITraderViewModelAbstractFactory
     {
 
-        private readonly ITraderViewModelFactory<HomeViewModel> _homeViewModelFactory;
-        private readonly ITraderViewModelFactory<PortfolioViewModel> _portfolioViewModelFactory;
-        private readonly ITraderViewModelFactory<LoginViewModel> _loginViewModelFactory;
-        private readonly BuyViewModel _buyViewModel;
-        public TradeViewModelAbstractFactory(ITraderViewModelFactory<HomeViewModel> homeViewModelFactory,
-            ITraderViewModelFactory<PortfolioViewModel> portfolioViewModelFactory,
-            BuyViewModel buyViewModel, ITraderViewModelFactory<LoginViewModel> loginViewModelFactory)
+        private readonly CreateViewModel<HomeViewModel> _createHomeViewModel;
+        private readonly CreateViewModel<PortfolioViewModel> _createPortfolioViewModel;
+        private readonly CreateViewModel<LoginViewModel> _createLoginViewModel;
+        private readonly CreateViewModel<BuyViewModel> _createBuyViewModel;
+
+        public TradeViewModelAbstractFactory(CreateViewModel<HomeViewModel> createHomeViewModel,
+            CreateViewModel<PortfolioViewModel> createPortfolioViewModel, CreateViewModel<LoginViewModel> createLoginViewModel,
+            CreateViewModel<BuyViewModel> createBuyViewModel)
         {
-            _homeViewModelFactory = homeViewModelFactory;
-            _portfolioViewModelFactory = portfolioViewModelFactory;
-            _buyViewModel = buyViewModel;
-            _loginViewModelFactory = loginViewModelFactory;
+            _createHomeViewModel = createHomeViewModel;
+            _createPortfolioViewModel = createPortfolioViewModel;
+            _createLoginViewModel = createLoginViewModel;
+            _createBuyViewModel = createBuyViewModel;
         }
 
+        /// <summary>
+        /// tworzy ViewModel dla danego ViewType
+        /// </summary>
+        /// <param name="viewType">enum odpowiadający poszczególnym ViewModelom wyświetlanym w aplikacji</param>
+        /// <returns>zwraca ViewModel odpowiadający typowi wyłanemu</returns>
+        /// <exception cref="ArgumentException"></exception>
         public ViewModelBase CreateViewModel(ViewType viewType)
         {
             switch (viewType)
             {
                 case ViewType.Login:
-                    return _loginViewModelFactory.CreateViewModel();
+                    return _createLoginViewModel();
                 case ViewType.Home:
-                    return _homeViewModelFactory.CreateViewModel();
+                    return _createHomeViewModel();
                 case ViewType.Portfolio:
-                    return _portfolioViewModelFactory.CreateViewModel();
+                    return _createPortfolioViewModel();
                 case ViewType.Buy:
-                    return _buyViewModel;
+                    return _createBuyViewModel();
                 default:
                     throw new ArgumentException("No ViewModel for that ViewType", "viewType");
             }
