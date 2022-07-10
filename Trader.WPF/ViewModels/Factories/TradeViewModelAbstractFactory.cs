@@ -13,18 +13,24 @@ namespace Trader.WPF.ViewModels.Factories
 
         private readonly ITraderViewModelFactory<HomeViewModel> _homeViewModelFactory;
         private readonly ITraderViewModelFactory<PortfolioViewModel> _portfolioViewModelFactory;
+        private readonly ITraderViewModelFactory<LoginViewModel> _loginViewModelFactory;
         private readonly BuyViewModel _buyViewModel;
-        public TradeViewModelAbstractFactory(ITraderViewModelFactory<HomeViewModel> homeViewModelFactory, ITraderViewModelFactory<PortfolioViewModel> portfolioViewModelFactory, BuyViewModel buyViewModel)
+        public TradeViewModelAbstractFactory(ITraderViewModelFactory<HomeViewModel> homeViewModelFactory,
+            ITraderViewModelFactory<PortfolioViewModel> portfolioViewModelFactory,
+            BuyViewModel buyViewModel, ITraderViewModelFactory<LoginViewModel> loginViewModelFactory)
         {
             _homeViewModelFactory = homeViewModelFactory;
             _portfolioViewModelFactory = portfolioViewModelFactory;
             _buyViewModel = buyViewModel;
+            _loginViewModelFactory = loginViewModelFactory;
         }
 
         public ViewModelBase CreateViewModel(ViewType viewType)
         {
             switch (viewType)
             {
+                case ViewType.Login:
+                    return _loginViewModelFactory.CreateViewModel();
                 case ViewType.Home:
                     return _homeViewModelFactory.CreateViewModel();
                 case ViewType.Portfolio:

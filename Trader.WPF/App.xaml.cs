@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Trader.FinancialModelingPrepAPI.Services;
+using Trader.WPF.State.Authenticators;
 using Trader.WPF.State.Navigators;
 using Trader.WPF.ViewModels;
 using Trader.WPF.ViewModels.Factories;
@@ -27,7 +28,7 @@ namespace Trader.WPF
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            IServiceProvider serviceProvider = CreateServiceProvider();           
+            IServiceProvider serviceProvider = CreateServiceProvider();
 
             Window mainWindow = serviceProvider.GetRequiredService<MainWindow>(); 
             mainWindow.Show();
@@ -52,10 +53,14 @@ namespace Trader.WPF
             services.AddSingleton<ITraderViewModelFactory<HomeViewModel>, HomeViewModelFactory>();
             services.AddSingleton<ITraderViewModelFactory<PortfolioViewModel>, PortfolioViewModelFactory>();
             services.AddSingleton<ITraderViewModelFactory<CurrencyListingViewModel>, CurrencyListingViewModelFactory>();
+            services.AddSingleton<ITraderViewModelFactory<LoginViewModel>>((services) => 
+            new LoginViewModelFactory(services.GetRequiredService<IAuthenticator>(),
+            new Renavigator<HomeViewModel>(services.GetRequiredService<INavigator>(), services.GetRequiredService<ITraderViewModelFactory<HomeViewModel>>())));
 
-            
-            
+
+
             services.AddScoped<INavigator, Navigator>();
+            services.AddScoped<IAuthenticator,Authenticator>();
             services.AddScoped<MainViewModel>();
             services.AddScoped<BuyViewModel>();
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,7 +78,8 @@ namespace TraderOop.Domain.Services.AuthenticationServices
 
                 Account account = new Account()
                 {
-                    AccountHolder = user
+                    AccountHolder = user,
+                    Balance = 500
                 };
                 await _accountService.Create(account);
             }
