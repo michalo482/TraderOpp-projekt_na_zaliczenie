@@ -8,11 +8,13 @@ namespace Trader.WPF.ViewModels
 {
     public class HomeViewModel : ViewModelBase
     {
-        public CurrencyListingViewModel CurrencyListingViewModel { get; set; }
+        public AssetSummaryViewModel AssetSummaryViewModel { get; }
+        public CurrencyListingViewModel CurrencyListingViewModel { get; }
 
-        public HomeViewModel(CurrencyListingViewModel currencyListingViewModel)
+        public HomeViewModel(AssetSummaryViewModel assetSummaryViewModel, CurrencyListingViewModel currencyListingViewModel)
         {
             CurrencyListingViewModel = currencyListingViewModel;
+            AssetSummaryViewModel = assetSummaryViewModel;
         }
     }
 }

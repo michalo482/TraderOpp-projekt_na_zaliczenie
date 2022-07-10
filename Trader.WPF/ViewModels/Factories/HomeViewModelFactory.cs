@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Trader.WPF.ViewModels.Factories
 {
-    public class HomeViewModelFactory : ITraderViewModelFactory<HomeViewModel>
+    public class HomeViewModelFactory //: ITraderViewModelFactory<HomeViewModel>
     {
 
         private readonly ITraderViewModelFactory<CurrencyListingViewModel> _currencyViewModelFactory;
@@ -16,10 +16,10 @@ namespace Trader.WPF.ViewModels.Factories
             _currencyViewModelFactory = currencyViewModelFactory;
         }
 
-        public HomeViewModel CreateViewModel()
+        /*public HomeViewModel CreateViewModel()
         {
             return new HomeViewModel(_currencyViewModelFactory.CreateViewModel());
-        }
+        }*/
     }
 
 }

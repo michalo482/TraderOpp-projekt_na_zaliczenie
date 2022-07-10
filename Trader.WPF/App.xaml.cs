@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Trader.FinancialModelingPrepAPI.Services;
 using Trader.WPF.State.Accounts;
+using Trader.WPF.State.Assets;
 using Trader.WPF.State.Authenticators;
 using Trader.WPF.State.Navigators;
 using Trader.WPF.ViewModels;
@@ -59,10 +60,11 @@ namespace Trader.WPF
                 new HomeViewModel(
                     CurrencyListingViewModel.LoadCurrencyViewModel(services.GetRequiredService<ICurrencyService>()))
             );*/
-
+            services.AddSingleton<AssetSummaryViewModel>();
             services.AddSingleton<CreateViewModel<HomeViewModel>>(services =>
             {
                 return () => new HomeViewModel(
+                    services.GetRequiredService<AssetSummaryViewModel>(),
                     CurrencyListingViewModel.LoadCurrencyViewModel(services.GetRequiredService<ICurrencyService>()));
             });
 
@@ -89,6 +91,7 @@ namespace Trader.WPF
             services.AddSingleton<INavigator, Navigator>();
             services.AddSingleton<IAuthenticator,Authenticator>();
             services.AddSingleton<IAccountStore, AccountStore>();
+            services.AddSingleton<AssetStore>();
             services.AddScoped<MainViewModel>();
             services.AddScoped<BuyViewModel>();
 

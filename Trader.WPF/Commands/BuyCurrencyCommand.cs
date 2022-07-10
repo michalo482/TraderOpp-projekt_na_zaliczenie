@@ -39,6 +39,8 @@ namespace Trader.WPF.Commands
                 Account account = await _buyService.BuyCurrency(_accountStore.CurrentAccount, _buyViewModel.Symbol, _buyViewModel.SharesToBuy);
 
                 _accountStore.CurrentAccount = account;
+
+                MessageBox.Show("Kupione!");
             }
             catch (Exception e)
             {
