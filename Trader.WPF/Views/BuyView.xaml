@@ -6,18 +6,30 @@
              xmlns:local="clr-namespace:Trader.WPF.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        
+    </UserControl.Resources>
     <Grid Margin="20">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <WrapPanel Grid.Row="0" HorizontalAlignment="Center">
             <TextBox Width="100" Text="{Binding Symbol, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Margin="10 0 0 0" Command="{Binding SearchSymbolCommand}" Content="Search"/>
+            <Button Margin="10 0 0 0" Command="{Binding SearchSymbolCommand}" Content="Szukaj"/>
         </WrapPanel>
 
-        <Grid Margin="0 20 0 0" Grid.Row="1" MaxWidth="500">
+        <TextBlock Grid.Row="1" Margin="0 10 0 0" HorizontalAlignment="Center" DataContext="{Binding ErrorMessageViewModel}" Text="{Binding Message}" Foreground="DarkRed"
+                   Visibility="{Binding HasMessage, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+        <TextBlock Grid.Row="2" Margin="0 10 0 0" HorizontalAlignment="Center" DataContext="{Binding StatusMessageViewModel}" Text="{Binding Message}" Foreground="DarkGreen"
+                   Visibility="{Binding HasMessage, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+        <Grid Margin="0 20 0 0" Grid.Row="3" MaxWidth="500">
             <Grid.Style>
                 <Style TargetType="Grid">
                     <Style.Triggers>

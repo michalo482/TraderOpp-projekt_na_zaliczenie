@@ -8,6 +8,7 @@ using Trader.WPF.State.Authenticators;
 using Trader.WPF.State.Navigators;
 using Trader.WPF.ViewModels;
 using Trader.WPF.ViewModels.Factories;
+using TraderOop.Domain.Exceptions;
 
 namespace Trader.WPF.Commands
 {
@@ -36,13 +37,24 @@ namespace Trader.WPF.Commands
 
         public async void Execute(object? parameter)
         {
-            bool success = await _authenticator.Login(_loginViewModel.Username, parameter.ToString());
-
-            if(success)
+            try
             {
+                await _authenticator.Login(_loginViewModel.Username, parameter.ToString());
                 _renavigator.Renavigate();
             }
-            
+            catch (UserNotFoundException)
+            {
+                _loginViewModel.ErrorMessage = "Nazwy użytkownika nie ma w bazie.";
+            }
+            catch (InvalidPasswordException)
+            {
+                _loginViewModel.ErrorMessage = "Hasło jest nieprawidłowe.";
+            }
+            catch (Exception)
+            {
+                _loginViewModel.ErrorMessage = "Wystąpił nieoczekiwany błąd.";
+            }
+
         }
     }
 }

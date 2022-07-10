@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Trader.WPF.ViewModels;
+using TraderOop.Domain.Exceptions;
 using TraderOop.Domain.Services;
 
 namespace Trader.WPF.Commands
@@ -35,9 +36,13 @@ namespace Trader.WPF.Commands
                 _buyViewModel.SearchResultSymbol = _buyViewModel.Symbol.ToUpper();
                 _buyViewModel.CurrencyPrice = currencyPrice;
             }
-            catch (Exception e)
+            catch (InvalidSymbolException)
             {
-                MessageBox.Show(e.Message);
+                _buyViewModel.ErrorMessage = "Nie znaleziono waluty o podanym symbolu";
+            }
+            catch (Exception)
+            {
+                _buyViewModel.ErrorMessage = "Coś poszło nie tak";
             }
         }
     }

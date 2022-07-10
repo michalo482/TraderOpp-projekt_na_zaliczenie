@@ -26,9 +26,27 @@ namespace Trader.WPF.ViewModels
             }
         }
 
+        public MessageViewModel ErrorMessageViewModel { get; set; }
+
+        public string ErrorMessage
+        {
+            set => ErrorMessageViewModel.Message = value;
+
+        }
+
+        public string StatusMessage
+        {
+            set => StatusMessageViewModel.Message = value;
+
+        }
+        public MessageViewModel StatusMessageViewModel { get; set; }
+
         public ICommand LoginCommand { get; }
         public LoginViewModel(IAuthenticator authenticator, IRenavigator renavigator)
         {
+            ErrorMessageViewModel = new MessageViewModel();
+            StatusMessageViewModel = new MessageViewModel();
+
             LoginCommand = new LoginCommand(authenticator, this, renavigator);
         }
     }

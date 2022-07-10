@@ -68,12 +68,29 @@ namespace Trader.WPF.ViewModels
             }
         }
 
+        public MessageViewModel ErrorMessageViewModel { get; set; }
+
+        public string ErrorMessage
+        {
+            set => ErrorMessageViewModel.Message = value;
+            
+        }
+
+        public string StatusMessage
+        {
+            set => StatusMessageViewModel.Message = value;
+
+        }
+        public MessageViewModel StatusMessageViewModel { get; set; }
 
         public ICommand SearchSymbolCommand { get; set; }
         public ICommand BuyCurrencyCommand { get; set; }
 
         public BuyViewModel(ICurrencyPriceService currencyPriceService, IBuyService buyService, IAccountStore accountStore)
         {
+            ErrorMessageViewModel = new MessageViewModel();
+            StatusMessageViewModel = new MessageViewModel();
+
             SearchSymbolCommand = new SearchSymbolCommand(this, currencyPriceService);
             BuyCurrencyCommand = new BuyCurrencyCommand(this, buyService, accountStore);
         }

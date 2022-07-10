@@ -9,6 +9,7 @@ using Trader.WPF.State.Accounts;
 using Trader.WPF.ViewModels;
 using TraderOop.Domain.Models;
 using TraderOop.Domain.Services.TransactionServices;
+using TraderOop.Domain.Exceptions;
 
 namespace Trader.WPF.Commands
 {
@@ -34,17 +35,32 @@ namespace Trader.WPF.Commands
 
         public async void Execute(object? parameter)
         {
+            _buyViewModel.StatusMessage = string.Empty;
+            _buyViewModel.ErrorMessage = string.Empty;
+
             try
             {
-                Account account = await _buyService.BuyCurrency(_accountStore.CurrentAccount, _buyViewModel.Symbol, _buyViewModel.SharesToBuy);
+                string symbol = _buyViewModel.Symbol;
+                int shares = _buyViewModel.SharesToBuy;
+
+                Account account = await _buyService.BuyCurrency(_accountStore.CurrentAccount, _buyViewModel.Symbol.ToUpper(), _buyViewModel.SharesToBuy);
 
                 _accountStore.CurrentAccount = account;
 
-                MessageBox.Show("Kupione!");
+
+                _buyViewModel.StatusMessage = $"Kupiono {shares} {symbol}.";
             }
-            catch (Exception e)
+            catch (InsufficientFundsException)
             {
-                MessageBox.Show(e.Message);
+                _buyViewModel.ErrorMessage = "Nie masz wystarczającej ilości środków na koncie.";
+            }
+            catch (InvalidSymbolException)
+            {
+                _buyViewModel.ErrorMessage = "Nie znaleziono waluty o podanym symbolu.";
+            }
+            catch (Exception)
+            {
+                _buyViewModel.ErrorMessage = "Zakup zakończony niepowodzeniem!";
             }
         }
     }

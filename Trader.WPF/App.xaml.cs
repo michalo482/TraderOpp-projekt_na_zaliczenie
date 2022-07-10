@@ -54,7 +54,7 @@ namespace Trader.WPF
             services.AddSingleton<ITraderViewModelAbstractFactory, TradeViewModelAbstractFactory>();
             services.AddSingleton<BuyViewModel>();
             services.AddSingleton<PortfolioViewModel>();
-            //gdyby trzeba było jednej instancji HomeViewModel per aplikacje
+            //gdyby trzeba było jednej instancji HomeViewModel per aplikacje, limit api
             /*services.AddSingleton<HomeViewModel>(services => 
             
                 new HomeViewModel(

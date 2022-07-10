@@ -38,20 +38,11 @@ namespace Trader.WPF.State.Authenticators
 
         public bool IsLoggedIn => CurrenctAccount != null;
 
-        public async Task<bool> Login(string username, string password)
+        public async Task Login(string username, string password)
         {
-            bool success = true;
-
-            try
-            {
+            
                 CurrenctAccount = await _authenticationService.Login(username, password);
-            }
-            catch (Exception)
-            {
-                success = false;
-            }
-
-            return success;
+           
         }
 
             public void Logout()
