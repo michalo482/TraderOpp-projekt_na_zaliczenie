@@ -6,24 +6,31 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Trader.WPF.Commands;
 using Trader.WPF.State.Accounts;
+using Trader.WPF.State.Assets;
 using TraderOop.Domain.Services;
 using TraderOop.Domain.Services.TransactionServices;
 
 namespace Trader.WPF.ViewModels
 {
-    public class BuyViewModel : ViewModelBase, ISearchSymbolViewModel
+    public class SellViewModel : ViewModelBase, ISearchSymbolViewModel
     {
-        private string _symbol;
-        public string Symbol
+        private StockViewModel _selectedCurrencies;
+        public StockViewModel SelectedCurrencies
         {
-            get { return _symbol; }
+            get
+            {
+                return _selectedCurrencies;
+            }
             set
             {
-                _symbol = value;
-                OnPropertyChanged(nameof(Symbol));
-
+                _selectedCurrencies = value;
+                OnPropertyChanged(nameof(SelectedCurrencies));
             }
         }
+
+        private string _symbol;
+        public string Symbol => SelectedCurrencies?.Symbol;
+
 
         private string _searchResultSymbol = string.Empty;
         public string SearchResultSymbol
@@ -52,24 +59,20 @@ namespace Trader.WPF.ViewModels
             }
         }
 
-        private int _sharesToBuy;
-        public int SharesToBuy
+        private int _sharesToSell;
+        public int SharesToSell
         {
-            get { return _sharesToBuy; }
+            get { return _sharesToSell; }
             set
             {
-                _sharesToBuy = value; OnPropertyChanged(nameof(SharesToBuy));
+                _sharesToSell = value;
+                OnPropertyChanged(nameof(SharesToSell));
                 OnPropertyChanged(nameof(TotalPrice));
             }
         }
 
-        public decimal TotalPrice
-        {
-            get
-            {
-                return SharesToBuy * CurrencyPrice;
-            }
-        }
+        public decimal TotalPrice => CurrencyPrice * SharesToSell;
+        public AssetListingViewModel AssetListingViewModel { get; }
 
         public MessageViewModel ErrorMessageViewModel { get; set; }
 
@@ -86,16 +89,18 @@ namespace Trader.WPF.ViewModels
         }
         public MessageViewModel StatusMessageViewModel { get; set; }
 
-        public ICommand SearchSymbolCommand { get; set; }
-        public ICommand BuyCurrencyCommand { get; set; }
+        public ICommand SearchSymbolCommand { get; }
+        public ICommand SellCommand { get; }
 
-        public BuyViewModel(ICurrencyPriceService currencyPriceService, IBuyService buyService, IAccountStore accountStore)
+        public SellViewModel(AssetStore assetStore, ICurrencyPriceService currencyPriceService, IAccountStore accountStore, ISellService sellService)
         {
-            ErrorMessageViewModel = new MessageViewModel();
-            StatusMessageViewModel = new MessageViewModel();
+            AssetListingViewModel = new AssetListingViewModel(assetStore);
 
             SearchSymbolCommand = new SearchSymbolCommand(this, currencyPriceService);
-            BuyCurrencyCommand = new BuyCurrencyCommand(this, buyService, accountStore);
+            SellCommand = new SellCommand(this, sellService, accountStore);
+
+            ErrorMessageViewModel = new MessageViewModel();
+            StatusMessageViewModel = new MessageViewModel();
         }
     }
 }

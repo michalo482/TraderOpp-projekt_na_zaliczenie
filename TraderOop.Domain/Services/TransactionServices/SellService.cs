@@ -45,7 +45,7 @@ namespace TraderOop.Domain.Services.TransactionServices
             }
             );
             //zwrócić zaktualizowaną kopię konta
-            account.Balance -= currencyPrice * shares;
+            account.Balance += currencyPrice * shares;
 
             await _dataService.Update(account.Id, account);
 

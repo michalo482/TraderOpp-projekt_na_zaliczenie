@@ -20,15 +20,17 @@ namespace Trader.WPF.ViewModels.Factories
         private readonly CreateViewModel<PortfolioViewModel> _createPortfolioViewModel;
         private readonly CreateViewModel<LoginViewModel> _createLoginViewModel;
         private readonly CreateViewModel<BuyViewModel> _createBuyViewModel;
+        private readonly CreateViewModel<SellViewModel> _createSellViewModel;
 
         public TradeViewModelAbstractFactory(CreateViewModel<HomeViewModel> createHomeViewModel,
             CreateViewModel<PortfolioViewModel> createPortfolioViewModel, CreateViewModel<LoginViewModel> createLoginViewModel,
-            CreateViewModel<BuyViewModel> createBuyViewModel)
+            CreateViewModel<BuyViewModel> createBuyViewModel, CreateViewModel<SellViewModel> createSellViewModel)
         {
             _createHomeViewModel = createHomeViewModel;
             _createPortfolioViewModel = createPortfolioViewModel;
             _createLoginViewModel = createLoginViewModel;
             _createBuyViewModel = createBuyViewModel;
+            _createSellViewModel = createSellViewModel;
         }
 
         /// <summary>
@@ -49,6 +51,8 @@ namespace Trader.WPF.ViewModels.Factories
                     return _createPortfolioViewModel();
                 case ViewType.Buy:
                     return _createBuyViewModel();
+                case ViewType.Sell:
+                    return _createSellViewModel();
                 default:
                     throw new ArgumentException("No ViewModel for that ViewType", "viewType");
             }

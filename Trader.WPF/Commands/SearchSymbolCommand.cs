@@ -14,10 +14,10 @@ namespace Trader.WPF.Commands
     public class SearchSymbolCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
-        private BuyViewModel _buyViewModel;
+        private ISearchSymbolViewModel _buyViewModel;
         private ICurrencyPriceService _currencyPriceService;
 
-        public SearchSymbolCommand(BuyViewModel buyViewModel, ICurrencyPriceService currencyPriceService)
+        public SearchSymbolCommand(ISearchSymbolViewModel buyViewModel, ICurrencyPriceService currencyPriceService)
         {
             _buyViewModel = buyViewModel;
             _currencyPriceService = currencyPriceService;

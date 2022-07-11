@@ -19,6 +19,7 @@ using TraderOop.Domain.Models;
 using TraderOop.Domain.Services;
 using TraderOop.Domain.Services.AuthenticationServices;
 using TraderOop.Domain.Services.TransactionServices;
+using TraderOop.EntityFramework;
 using TraderOop.EntityFramework.Services;
 
 namespace Trader.WPF
@@ -30,7 +31,13 @@ namespace Trader.WPF
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            IServiceProvider serviceProvider = CreateServiceProvider();
+            /*TraderDbContextFactory contextFactory = new TraderDbContextFactory();
+            using (TraderDbContext context = contextFactory.CreateDbContext())
+            {
+                context.Database.EnsureCreated();
+            }*/
+
+                IServiceProvider serviceProvider = CreateServiceProvider();
 
             Window mainWindow = serviceProvider.GetRequiredService<MainWindow>(); 
             mainWindow.Show();
@@ -41,7 +48,7 @@ namespace Trader.WPF
         {
             IServiceCollection services = new ServiceCollection();
 
-            services.AddSingleton<TraderOop.EntityFramework.TraderDbContextFactory>();
+            services.AddSingleton<TraderDbContextFactory>();
             services.AddSingleton<IAuthenticationService, AuthenticationService>();
             services.AddSingleton<IDataService<Account>, AccountDataService>();
             services.AddSingleton<IAccountService, AccountDataService>();
@@ -54,6 +61,7 @@ namespace Trader.WPF
 
             services.AddSingleton<ITraderViewModelAbstractFactory, TradeViewModelAbstractFactory>();
             services.AddSingleton<BuyViewModel>();
+            services.AddSingleton<SellViewModel>();
             services.AddSingleton<PortfolioViewModel>();
             //gdyby trzeba było jednej instancji HomeViewModel per aplikacje, limit api
             /*services.AddSingleton<HomeViewModel>(services => 
@@ -72,6 +80,11 @@ namespace Trader.WPF
             services.AddSingleton<CreateViewModel<BuyViewModel>>(services =>
             {
                 return () => services.GetRequiredService<BuyViewModel>();
+            });
+
+            services.AddSingleton<CreateViewModel<SellViewModel>>(services =>
+            {
+                return () => services.GetRequiredService<SellViewModel>();
             });
 
             services.AddSingleton<CreateViewModel<PortfolioViewModel>>(services =>

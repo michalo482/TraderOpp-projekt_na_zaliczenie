@@ -14,9 +14,12 @@ namespace TraderOop.EntityFramework
         {
             var options = new DbContextOptionsBuilder<TraderDbContext>();
 
+
             options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=TraderDB;Trusted_Connection=True;");
 
             return new TraderDbContext(options.Options);
+
+            //return new TraderDbContext(new DbContextOptionsBuilder().UseSqlite("Data Source=Trader.db").Options);
 
         }
     }

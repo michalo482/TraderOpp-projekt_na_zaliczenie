@@ -12,8 +12,8 @@ using TraderOop.EntityFramework;
 namespace TraderOop.EntityFramework.Migrations
 {
     [DbContext(typeof(TraderDbContext))]
-    [Migration("20220708222319_TypeChanged")]
-    partial class TypeChanged
+    [Migration("20220711185016_NewDataB")]
+    partial class NewDataB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

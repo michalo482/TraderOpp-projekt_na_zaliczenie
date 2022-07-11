@@ -19,5 +19,7 @@ namespace Trader.WPF.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        //TODO dodać Dispose(), możliwe memory leaks!!!!!!!!!!!!!!!!!!!!!!!
     }
 }
