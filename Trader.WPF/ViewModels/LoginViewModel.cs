@@ -25,6 +25,19 @@ namespace Trader.WPF.ViewModels
                 OnPropertyChanged(nameof(Username));
             }
         }
+        private string _password;
+        public string Password
+        {
+            get
+            {
+                return _password;
+            }
+            set
+            {
+                _password = value;
+                OnPropertyChanged(nameof(Password));
+            }
+        }
 
         public MessageViewModel ErrorMessageViewModel { get; set; }
 
@@ -42,12 +55,14 @@ namespace Trader.WPF.ViewModels
         public MessageViewModel StatusMessageViewModel { get; set; }
 
         public ICommand LoginCommand { get; }
-        public LoginViewModel(IAuthenticator authenticator, IRenavigator renavigator)
+        public ICommand ViewRegisterCommand { get; }
+        public LoginViewModel(IAuthenticator authenticator, IRenavigator loginRenavigator, IRenavigator registerRenavigator)
         {
             ErrorMessageViewModel = new MessageViewModel();
             StatusMessageViewModel = new MessageViewModel();
 
-            LoginCommand = new LoginCommand(authenticator, this, renavigator);
+            LoginCommand = new LoginCommand(authenticator, this, loginRenavigator);
+            ViewRegisterCommand = new RenavigateCommand(registerRenavigator);
         }
     }
 }

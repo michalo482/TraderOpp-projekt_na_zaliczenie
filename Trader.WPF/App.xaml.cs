@@ -78,12 +78,24 @@ namespace Trader.WPF
                 return () => services.GetRequiredService<PortfolioViewModel>();
             });
 
+            services.AddSingleton<Renavigator<LoginViewModel>>();
+            services.AddSingleton<CreateViewModel<RegisterViewModel>>(services =>
+            {
+                return () => new RegisterViewModel(
+                    services.GetRequiredService<Renavigator<LoginViewModel>>(),
+                    services.GetRequiredService<IAuthenticator>(),
+                    services.GetRequiredService<Renavigator<LoginViewModel>>()
+                    );
+            });
+
             services.AddSingleton<Renavigator<HomeViewModel>>();
+            services.AddSingleton<Renavigator<RegisterViewModel>>();
             services.AddSingleton<CreateViewModel<LoginViewModel>>(services =>
             {
                 return () => new LoginViewModel(
                     services.GetRequiredService<IAuthenticator>(),
-                    services.GetRequiredService<Renavigator<HomeViewModel>>()
+                    services.GetRequiredService<Renavigator<HomeViewModel>>(),
+                    services.GetRequiredService<Renavigator<RegisterViewModel>>()
                     );
             });
 

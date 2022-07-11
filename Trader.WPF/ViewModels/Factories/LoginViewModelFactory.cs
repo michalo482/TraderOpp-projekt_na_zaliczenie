@@ -21,7 +21,7 @@ namespace Trader.WPF.ViewModels.Factories
 
         public LoginViewModel CreateViewModel()
         {
-            return new LoginViewModel(_authenticator, _renavigator);
+            return new LoginViewModel(_authenticator, _renavigator, _renavigator);
         }
     }
 }

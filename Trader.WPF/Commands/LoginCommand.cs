@@ -39,7 +39,7 @@ namespace Trader.WPF.Commands
         {
             try
             {
-                await _authenticator.Login(_loginViewModel.Username, parameter.ToString());
+                await _authenticator.Login(_loginViewModel.Username, _loginViewModel.Password);
                 _renavigator.Renavigate();
             }
             catch (UserNotFoundException)
