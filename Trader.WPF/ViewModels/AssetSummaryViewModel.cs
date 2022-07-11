@@ -12,8 +12,9 @@ namespace Trader.WPF.ViewModels
     {
         private readonly AssetStore _assetStore;
 
-        private readonly ObservableCollection<StockViewModel> _topAssets;
-        public IEnumerable<StockViewModel> TopAssets => _topAssets;
+        
+        public AssetListingViewModel AssetListingViewModel { get; }
+        //public IEnumerable<StockViewModel> Assets => _assets;
 
         public decimal AccountBalance => _assetStore.AccountBalance;
         
@@ -21,36 +22,17 @@ namespace Trader.WPF.ViewModels
 
         public AssetSummaryViewModel(AssetStore assetStore)
         {
+            AssetListingViewModel = new AssetListingViewModel(assetStore, assets => assets.Take(3));
             _assetStore = assetStore;
-
-            _topAssets = new ObservableCollection<StockViewModel>();
 
             _assetStore.StateChanged += AssetStore_StateChanged;
 
-            ResetAssets();
         }
 
         private void AssetStore_StateChanged()
         {
             OnPropertyChanged(nameof(AccountBalance));
-            ResetAssets();
         }
-
-        private void ResetAssets()
-        {
-            IEnumerable<StockViewModel> assetsViewModel = (IEnumerable<StockViewModel>)_assetStore.AssetTransactions
-                .GroupBy(t => t.Stock.Symbol)
-                .Select(g => new StockViewModel(g.Key, g.Sum(t => t.IsPurchase ? t.Shares : -t.Shares)))
-                .Where(s => s.Shares > 0)
-                .OrderByDescending(s => s.Shares)
-                .Take(3);
-
-            _topAssets.Clear();
-
-            foreach (StockViewModel asset in assetsViewModel)
-            {
-                _topAssets.Add(asset);
-            }
-        }
+     
     }
 }

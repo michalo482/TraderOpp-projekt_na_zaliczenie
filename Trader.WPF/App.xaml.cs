@@ -47,6 +47,7 @@ namespace Trader.WPF
             services.AddSingleton<IAccountService, AccountDataService>();
             services.AddSingleton<ICurrencyPriceService, CurrencyPriceService>();
             services.AddSingleton<IBuyService, BuyService>();
+            services.AddSingleton<ISellService, SellService>();
             services.AddSingleton<ICurrencyService, CurrencyService>();
 
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
@@ -82,8 +83,8 @@ namespace Trader.WPF
             services.AddSingleton<CreateViewModel<RegisterViewModel>>(services =>
             {
                 return () => new RegisterViewModel(
-                    services.GetRequiredService<Renavigator<LoginViewModel>>(),
                     services.GetRequiredService<IAuthenticator>(),
+                    services.GetRequiredService<Renavigator<LoginViewModel>>(),                   
                     services.GetRequiredService<Renavigator<LoginViewModel>>()
                     );
             });

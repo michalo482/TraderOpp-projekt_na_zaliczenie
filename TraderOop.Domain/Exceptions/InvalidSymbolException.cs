@@ -8,7 +8,7 @@ namespace TraderOop.Domain.Exceptions
 {
     public class InvalidSymbolException : Exception
     {
-        private string Code { get; set; }
+        public string Code { get; }
 
         public InvalidSymbolException(string code)
         {
